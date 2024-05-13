@@ -1,2 +1,2 @@
-# FunalabTop
-Dashboard like nvitop for Funahashi Laboratory.
+# WeirdImageGuesser
+Our first web-application guess original image description.
