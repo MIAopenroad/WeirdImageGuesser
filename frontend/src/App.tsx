@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// App.tsx
+import React, { useState } from 'react';
+import { GameState, Participant, ScreenType } from './types';
+import StartScreen from './components/StartScreen';
+import GameScreen from './components/GameScreen';
+import ResultsScreen from './components/ResultsScreen';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App: React.FC = () => {
+  const [gameState, setGameState] = useState<GameState>({
+    participants: [],
+    rounds: 0,
+    currentRound: 0,
+    currentScreen: ScreenType.Start
+  });
+
+  const startGame = (participants: Participant[], rounds: number) => {
+    setGameState({
+      participants,
+      rounds,
+      currentRound: 1,
+      currentScreen: ScreenType.Game
+    });
+  };
+
+  const nextRound = () => {
+    if (gameState.currentRound < gameState.rounds) {
+      setGameState(prevState => ({
+        ...prevState,
+        currentRound: prevState.currentRound + 1
+      }));
+    } else {
+      setGameState(prevState => ({
+        ...prevState,
+        currentScreen: ScreenType.Results
+      }));
+    }
+  };
+
+  const returnToStart = () => {
+    setGameState({
+      participants: [],
+      rounds: 0,
+      currentRound: 0,
+      currentScreen: ScreenType.Start
+    });
+  };
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      {gameState.currentScreen === ScreenType.Start && <StartScreen startGame={startGame} />}
+      {gameState.currentScreen === ScreenType.Game && <GameScreen gameState={gameState} nextRound={nextRound} />}
+      {gameState.currentScreen === ScreenType.Results && <ResultsScreen gameState={gameState} returnToStart={returnToStart} />}
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
