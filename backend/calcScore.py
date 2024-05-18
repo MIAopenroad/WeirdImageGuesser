@@ -14,6 +14,7 @@ def cosine_similarity(vector1: list, vector2: list):
     vector2 = np.array(vector2)
 
 
+
 # answerを受け取り、埋め込みベクトルをリスト形式で返す関数
 def emb_answer(answer: str) -> List[float]:
     response = client.embeddings.create(
