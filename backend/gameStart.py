@@ -5,13 +5,13 @@ import os
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
 app = Flask(__name__)
+client = openai.OpenAI()
 
 
 # GPT-3.5によって絵のお題のpromptを生成する関数
 def generate_prompt():
-    client = openai.OpenAI()
     response = client.completions.create(
-        model = "gpt-3.5-turbo-0125",
+        model="gpt-3.5-turbo-0125",
         prompt="""
             変な絵を出力するために以下の条件を満たす日本語のpromptを作成してください。
             #dalle3のAPIに直接渡されるため、prompt以外の情報は含めない
@@ -26,8 +26,7 @@ def generate_prompt():
 
 
 # プロンプトから画像を生成してURLを返す関数
-def generate_img_from_prompt(img_prompt):
-    client = openai.OpenAI()
+def generate_img_from_prompt(img_prompt: str):
     response = client.images.generate(
         model="dall-e-3",
         prompt=img_prompt,
