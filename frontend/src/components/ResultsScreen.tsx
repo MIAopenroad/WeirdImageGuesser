@@ -1,5 +1,14 @@
+// components/ResultsScreen.tsx
 import React from 'react';
 import { GameState } from '../types';
+import {
+  Button,
+  List,
+  ListItem,
+  Stack,
+  Heading,
+  Text,
+} from '@chakra-ui/react';
 
 interface ResultsScreenProps {
   gameState: GameState;
@@ -10,17 +19,25 @@ const ResultsScreen: React.FC<ResultsScreenProps> = ({ gameState, returnToStart 
   const { participants } = gameState;
 
   return (
-    <div>
-      <h2>Results</h2>
-      <ul>
+    <>
+      <Heading as="h2" size="lg" mb={6}>
+        Results
+      </Heading>
+      <List spacing={3}>
         {participants.map((participant, index) => (
-          <li key={index}>
-            {participant.name}: {participant.score} points
-          </li>
+          <ListItem key={index}>
+            <Text fontSize="xl">
+              {participant.name}: {participant.score} points
+            </Text>
+          </ListItem>
         ))}
-      </ul>
-      <button onClick={returnToStart}>Return to Start</button>
-    </div>
+      </List>
+      <Stack spacing={4} mt={6}>
+        <Button colorScheme="teal" onClick={returnToStart}>
+          Return to Start
+        </Button>
+      </Stack>
+    </>
   );
 };
 

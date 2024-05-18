@@ -1,5 +1,15 @@
+// components/GameScreen.tsx
 import React, { useState } from 'react';
 import { GameState } from '../types';
+import {
+  Button,
+  FormControl,
+  FormLabel,
+  Input,
+  Stack,
+  Text,
+  Heading,
+} from '@chakra-ui/react';
 
 interface GameScreenProps {
   gameState: GameState;
@@ -26,25 +36,27 @@ const GameScreen: React.FC<GameScreenProps> = ({ gameState, nextRound }) => {
   };
 
   return (
-    <div>
-      <h2>Round {currentRound} of {rounds}</h2>
-      <p>Quiz Question: What is the capital of France?</p> {/* Example question */}
-      {participants.map((participant, index) => (
-        <div key={index}>
-          <label>
-            {participant.name}'s Answer:
-            <input
+    <>
+      <Heading as="h2" size="lg" mb={6}>
+        Round {currentRound} of {rounds}
+      </Heading>
+      <Text mb={6}>Quiz Question: What is the capital of France?</Text> {/* Example question */}
+      <Stack spacing={4}>
+        {participants.map((participant, index) => (
+          <FormControl key={index} id={`answer-${index}`}>
+            <FormLabel>{participant.name}'s Answer</FormLabel>
+            <Input
               type="text"
               value={answers[index]}
               onChange={e => handleAnswerChange(index, e.target.value)}
             />
-          </label>
-        </div>
-      ))}
-      <button onClick={handleSubmit}>
-        {currentRound === rounds ? 'Finish Game' : 'Next Round'}
-      </button>
-    </div>
+          </FormControl>
+        ))}
+        <Button colorScheme="teal" onClick={handleSubmit}>
+          {currentRound === rounds ? 'Finish Game' : 'Next Round'}
+        </Button>
+      </Stack>
+    </>
   );
 };
 

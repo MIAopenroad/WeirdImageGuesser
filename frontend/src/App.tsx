@@ -4,6 +4,7 @@ import { GameState, Participant, ScreenType } from './types';
 import StartScreen from './components/StartScreen';
 import GameScreen from './components/GameScreen';
 import ResultsScreen from './components/ResultsScreen';
+import { Box, Center } from '@chakra-ui/react';
 
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>({
@@ -46,11 +47,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <>
-      {gameState.currentScreen === ScreenType.Start && <StartScreen startGame={startGame} />}
-      {gameState.currentScreen === ScreenType.Game && <GameScreen gameState={gameState} nextRound={nextRound} />}
-      {gameState.currentScreen === ScreenType.Results && <ResultsScreen gameState={gameState} returnToStart={returnToStart} />}
-    </>
+    <Center minHeight="100vh" minWidth="100vw">
+      <Box textAlign="center" py={10} px={6}>
+        {gameState.currentScreen === ScreenType.Start && <StartScreen startGame={startGame} />}
+        {gameState.currentScreen === ScreenType.Game && <GameScreen gameState={gameState} nextRound={nextRound} />}
+        {gameState.currentScreen === ScreenType.Results && <ResultsScreen gameState={gameState} returnToStart={returnToStart} />}
+      </Box>
+    </Center>
   );
 };
 
