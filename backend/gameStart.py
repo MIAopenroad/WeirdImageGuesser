@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 import numpy as np
 import openai
 import os
@@ -49,15 +49,16 @@ def generate_img_from_prompt(img_prompt: str):
 
 
 # 画像生成、URLの出力を行うエンドポイント
-@app.route("/gameStart")
+@app.route("/gameStart", methods=["GET"])
 def game_start():
     img_prompt = generate_prompt()
     url = generate_img_from_prompt(img_prompt)
-    return url, img_prompt
+    return jsonify({"url": url, "prompt": img_prompt})
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    pass
+    # app.run(debug=True)
     # img_pr = generate_prompt()
     # print(img_pr)
     # url = generate_img_from_prompt("cat")
