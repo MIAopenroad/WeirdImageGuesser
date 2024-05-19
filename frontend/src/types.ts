@@ -16,5 +16,7 @@ export interface GameState {
     rounds: number;
     currentRound: number;
     currentScreen: ScreenType;
+    imageURL: string;
+    answerPrompt: string;
 }
   
