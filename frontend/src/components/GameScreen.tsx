@@ -1,6 +1,7 @@
 // components/GameScreen.tsx
 // import { GameState, Participant, ScreenType } from '../types';
 import React, { useState } from 'react';
+import { QUESTION } from '../consts';
 import { GameState, Participant } from '../types';
 import {
   Button,
@@ -18,7 +19,7 @@ interface GameScreenProps {
 }
 
 const GameScreen: React.FC<GameScreenProps> = ({ gameState, nextRound }) => {
-  const { participants, currentRound, rounds } = gameState;
+  const { participants, currentRound, rounds, imageURL, answerPrompt } = gameState;
   const [answers, setAnswers] = useState(Array(participants.length).fill(''));
 
   const handleAnswerChange = (index: number, value: string) => {
@@ -28,10 +29,10 @@ const GameScreen: React.FC<GameScreenProps> = ({ gameState, nextRound }) => {
   };
 
   const handleSubmit = () => {
-    // Update participant scores based on answers (mock logic)
+    scores = gradeAnswers(answers, answerPrompt);
     const newParticipants = participants.map((participant, index) => ({
       ...participant,
-      score: participant.score + (answers[index] === 'correct' ? 1 : 0) // Example scoring logic
+      score: participant.score + scores[index]
     }));
     nextRound(newParticipants);
   };
@@ -41,7 +42,8 @@ const GameScreen: React.FC<GameScreenProps> = ({ gameState, nextRound }) => {
       <Heading as="h2" size="lg" mb={6}>
         Round {currentRound} of {rounds}
       </Heading>
-      <Text mb={6}>Quiz Question: What is the capital of France?</Text> {/* Example question */}
+      <Text mb={6}>{QUESTION}</Text>
+      {/* imageURL */}
       <Stack spacing={4}>
         {participants.map((participant, index) => (
           <FormControl key={index} id={`answer-${index}`}>
