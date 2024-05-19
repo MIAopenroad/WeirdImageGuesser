@@ -14,7 +14,8 @@ import {
   SliderTrack,
   SliderMark,
   Grid,
-  GridItem
+  GridItem,
+  Container
 } from '@chakra-ui/react';
 
 interface StartScreenProps {
@@ -94,12 +95,16 @@ const StartScreen: React.FC<StartScreenProps> = ({ startGame }) => {
             <SliderThumb boxSize={6} />
           </Slider>
         </FormControl>
-
+        <div style={{position: 'relative', top: 20, left: 0, width: '100%', textAlign: 'center'}}>
+        <Heading as="h1" size="xl" mb={6} mt={0}>
+          参加者
+        </Heading>
+      </div>
         <Grid templateColumns="repeat(2, 1fr)" gap={2}>
           {Array.from({ length: numParticipants }).map((_, index) => (
             <GridItem key={`player-${index + 1}`} colSpan={1} rowSpan={1}>
               <Stack spacing={4} style={{ position: 'relative', width: '100%' }}>
-                <FormControl id={`player-${index}`}>
+                <FormControl id={`player-${index + 1}`}>
                   <FormLabel>{`Player ${index + 1} name`}</FormLabel>
                   <Input 
                   type='text'
@@ -112,7 +117,7 @@ const StartScreen: React.FC<StartScreenProps> = ({ startGame }) => {
             <GridItem key={`player-${ numParticipants -index}`} colSpan={1} rowSpan={1}>
               <Stack spacing={4} style={{ position: 'relative', width: '100%' }}>
                 <FormControl id={`player-${index}`}>
-                  <FormLabel>{`Player ${index + 1} name`}</FormLabel>
+                  <FormLabel>{`Player ${index + numParticipants + 1} name`}</FormLabel>
                   <Input 
                   type='text'
                   disabled
@@ -122,10 +127,16 @@ const StartScreen: React.FC<StartScreenProps> = ({ startGame }) => {
             </GridItem>
           ))}
         </Grid>
-
-        <Button colorScheme="teal" onClick={handleStart}>
+        <div style={{
+          position:"relative",
+          bottom: "-50px",
+        }}>
+          <Button 
+          colorScheme="teal" 
+          onClick={handleStart}>
           Start Game
-        </Button>
+          </Button>
+        </div>
       </Stack>
     </>
   );
