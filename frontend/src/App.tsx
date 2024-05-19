@@ -5,15 +5,16 @@ import StartScreen from "./components/StartScreen";
 import GameScreen from "./components/GameScreen";
 import ResultsScreen from "./components/ResultsScreen";
 import { Box, Center } from "@chakra-ui/react";
+import { getQuestion } from "./api/functions";
 
-export const QUESTION_URI = "http://localhost:5000/gameStart";
-export const SCORE_URI = "http://localhost:5000/calcScore";
+export const QUESTION_URI = import.meta.env.VITE_QUESTION_URI;
+export const SCORE_URI = import.meta.env.VITE_SCORE_URI;
 
 const initialGameState: GameState = {
   participants: [],
   rounds: 0,
   currentRound: 0,
-  currentScreen: ScreenType.Start,
+  currentScreen: ScreenKind.Start,
   imageURL: "",
   answerPrompt: "",
 };
@@ -21,21 +22,21 @@ const initialGameState: GameState = {
 const App: React.FC = () => {
   const [gameState, setGameState] = useState<GameState>(initialGameState);
 
-  const startGame = (participants: Participant[], rounds: number) => {
-    imageURL, (answer = getQuestion());
+  const startGame = async (participants: Participant[], rounds: number) => {
+    const { imageURL, answer } = await getQuestion();
     setGameState({
       participants: participants,
       rounds: rounds,
       currentRound: 1,
-      currentScreen: ScreenType.Game,
+      currentScreen: ScreenKind.Game,
       imageURL: imageURL,
       answerPrompt: answer,
     });
   };
 
-  const nextRound = (newParticipants: Participant[]) => {
+  const nextRound = async (newParticipants: Participant[]) => {
     if (gameState.currentRound < gameState.rounds) {
-      imageURL, (answer = getQuestion());
+      const { imageURL, answer } = await getQuestion();
       setGameState((prevState) => ({
         ...prevState,
         participants: newParticipants,
@@ -47,7 +48,7 @@ const App: React.FC = () => {
       setGameState((prevState) => ({
         ...prevState,
         participants: newParticipants,
-        currentScreen: ScreenType.Results,
+        currentScreen: ScreenKind.Results,
         imageURL: "",
         answerPrompt: "",
       }));
