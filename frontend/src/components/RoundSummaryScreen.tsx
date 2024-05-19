@@ -16,7 +16,7 @@ interface RoundSummaryScreenProps {
 }
 
 const RoundSummaryScreen: React.FC<RoundSummaryScreenProps> = ({ gameState, nextRound }) => {
-  const { participants, currentRound, rounds, roundData } = gameState;
+  const { currentRound, roundData } = gameState;
 
   return (
     <>
