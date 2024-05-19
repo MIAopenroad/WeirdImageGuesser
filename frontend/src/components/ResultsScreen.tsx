@@ -1,4 +1,3 @@
-// components/ResultsScreen.tsx
 import React from 'react';
 import { GameState } from '../types';
 import {

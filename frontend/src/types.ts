@@ -3,9 +3,17 @@ export interface Participant {
   score: number;
 }
 
+export interface RoundData {
+    imageURL: string;
+    answerPrompt: string;
+    answers: string[];
+    scores: number[];
+}
+
 export const ScreenKind = {
   Start: "start",
   Game: "game",
+  RoundSummary: "roundSummary",
   Results: "results",
 } as const;
 
@@ -25,6 +33,5 @@ export interface GameState {
   rounds: number;
   currentRound: number;
   currentScreen: ScreenType;
-  imageURL: string;
-  answerPrompt: string;
+  roundData: RoundData[];
 }

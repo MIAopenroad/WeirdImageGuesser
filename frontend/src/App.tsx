@@ -1,8 +1,9 @@
 // App.tsx
 import React, { useState } from "react";
-import { GameState, Participant, ScreenKind } from "./types";
+import { GameState, Participant, ScreenKind, RoundData } from "./types";
 import StartScreen from "./components/StartScreen";
 import GameScreen from "./components/GameScreen";
+import RoundSummaryScreen from "./components/RoundSummaryScreen";
 import ResultsScreen from "./components/ResultsScreen";
 import { Box, Center } from "@chakra-ui/react";
 import { getQuestion } from "./api/functions";
@@ -15,8 +16,7 @@ const initialGameState: GameState = {
   rounds: 0,
   currentRound: 0,
   currentScreen: ScreenKind.Start,
-  imageURL: "",
-  answerPrompt: "",
+  roundData: [],
 };
 
 const App: React.FC = () => {
@@ -24,33 +24,52 @@ const App: React.FC = () => {
 
   const startGame = async (participants: Participant[], rounds: number) => {
     const { imageURL, answer } = await getQuestion();
+    let round = {
+      imageURL: imageURL,
+      answerPrompt: answer,
+      answers: [],
+      scores: [],
+    };
     setGameState({
       participants: participants,
       rounds: rounds,
       currentRound: 1,
       currentScreen: ScreenKind.Game,
-      imageURL: imageURL,
-      answerPrompt: answer,
+      roundData: [round],
     });
   };
 
-  const nextRound = async (newParticipants: Participant[]) => {
+  const showAnswer = async (newParticipants: Participant[], round: RoundData) => {
+    // update current roundData to round
+    const newRoundData = [...gameState.roundData];
+    newRoundData[gameState.currentRound - 1] = round;
+    setGameState(prevState => ({
+      ...prevState,
+      participants: newParticipants,
+      currentScreen: ScreenKind.RoundSummary,
+      roundData: newRoundData,
+    }));
+  };
+
+  const nextRound = async () => {
     if (gameState.currentRound < gameState.rounds) {
       const { imageURL, answer } = await getQuestion();
-      setGameState((prevState) => ({
-        ...prevState,
-        participants: newParticipants,
-        currentRound: prevState.currentRound + 1,
+      let round = {
         imageURL: imageURL,
         answerPrompt: answer,
+        answers: [],
+        scores: [],
+      };
+      setGameState((prevState) => ({
+        ...prevState,
+        currentRound: prevState.currentRound + 1,
+        currentScreen: ScreenKind.Game,
+        roundData: [...prevState.roundData, round],
       }));
     } else {
       setGameState((prevState) => ({
         ...prevState,
-        participants: newParticipants,
         currentScreen: ScreenKind.Results,
-        imageURL: "",
-        answerPrompt: "",
       }));
     }
   };
@@ -66,7 +85,10 @@ const App: React.FC = () => {
           <StartScreen startGame={startGame} />
         )}
         {gameState.currentScreen === ScreenKind.Game && (
-          <GameScreen gameState={gameState} nextRound={nextRound} />
+          <GameScreen gameState={gameState} showAnswer={showAnswer} />
+        )}
+        {gameState.currentScreen === ScreenKind.RoundSummary && (
+          <RoundSummaryScreen gameState={gameState} nextRound={nextRound} />
         )}
         {gameState.currentScreen === ScreenKind.Results && (
           <ResultsScreen gameState={gameState} returnToStart={returnToStart} />
