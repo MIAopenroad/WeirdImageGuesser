@@ -1,0 +1,37 @@
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 140-037-702
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/chat/completions', 'files': None, 'json_data': {'messages': [{'role': 'system', 'content': 'あなたはプロンプトを生成するアシスタントです。'}, {'role': 'user', 'content': '\n                                変な絵を出力するために以下の条件を満たす日本語のpromptを作成してください。\n                                #dalle3のAPIに直接渡されるため、prompt以外の情報は含めない\n                                #promptは一つ\n                                #短く、推測されにくい内容かつ日本語\n                                #""で囲む\n                                '}], 'model': 'gpt-3.5-turbo-0125'}}
+DEBUG:openai._base_client:Sending HTTP Request: POST https://api.openai.com/v1/chat/completions
+DEBUG:httpcore.connection:connect_tcp.started host='api.openai.com' port=443 local_address=None timeout=5.0 socket_options=None
+DEBUG:httpcore.connection:connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x1066cd410>
+DEBUG:httpcore.connection:start_tls.started ssl_context=<ssl.SSLContext object at 0x1066f40e0> server_hostname='api.openai.com' timeout=5.0
+DEBUG:httpcore.connection:start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x106938910>
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Sun, 19 May 2024 06:02:37 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'openai-organization', b'user-yahcsd0lbfudmaureie17kzy'), (b'openai-processing-ms', b'572'), (b'openai-version', b'2020-10-01'), (b'strict-transport-security', b'max-age=15724800; includeSubDomains'), (b'x-ratelimit-limit-requests', b'10000'), (b'x-ratelimit-limit-tokens', b'60000'), (b'x-ratelimit-remaining-requests', b'9999'), (b'x-ratelimit-remaining-tokens', b'59848'), (b'x-ratelimit-reset-requests', b'8.64s'), (b'x-ratelimit-reset-tokens', b'152ms'), (b'x-request-id', b'req_7d3ef5a5953414ddaa9e3b541bc43e1c'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Set-Cookie', b'__cf_bm=O8bFdGlt.5vNym_tNT9zCAkpKISMv9LSl_7dJc_O4zI-1716098557-1.0.1.1-U1zrmpQCnt6z.e386e30JgiPrlT7lwiQLN4K36CnFAYE8RHrKOeyHyxEJDYkq9HQQVoSmkkF8WVDVRD3TK7HSA; path=/; expires=Sun, 19-May-24 06:32:37 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Set-Cookie', b'_cfuvid=__W9DzT6LxGOM2Hi.e8CP.f8OKVn0GPTyVjJb9x9ivw-1716098557358-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), (b'Server', b'cloudflare'), (b'CF-RAY', b'8861e109d99780e7-NRT'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/chat/completions "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai._base_client:HTTP Response: POST https://api.openai.com/v1/chat/completions "200 OK" Headers([('date', 'Sun, 19 May 2024 06:02:37 GMT'), ('content-type', 'application/json'), ('transfer-encoding', 'chunked'), ('connection', 'keep-alive'), ('openai-organization', 'user-yahcsd0lbfudmaureie17kzy'), ('openai-processing-ms', '572'), ('openai-version', '2020-10-01'), ('strict-transport-security', 'max-age=15724800; includeSubDomains'), ('x-ratelimit-limit-requests', '10000'), ('x-ratelimit-limit-tokens', '60000'), ('x-ratelimit-remaining-requests', '9999'), ('x-ratelimit-remaining-tokens', '59848'), ('x-ratelimit-reset-requests', '8.64s'), ('x-ratelimit-reset-tokens', '152ms'), ('x-request-id', 'req_7d3ef5a5953414ddaa9e3b541bc43e1c'), ('cf-cache-status', 'DYNAMIC'), ('set-cookie', '__cf_bm=O8bFdGlt.5vNym_tNT9zCAkpKISMv9LSl_7dJc_O4zI-1716098557-1.0.1.1-U1zrmpQCnt6z.e386e30JgiPrlT7lwiQLN4K36CnFAYE8RHrKOeyHyxEJDYkq9HQQVoSmkkF8WVDVRD3TK7HSA; path=/; expires=Sun, 19-May-24 06:32:37 GMT; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('set-cookie', '_cfuvid=__W9DzT6LxGOM2Hi.e8CP.f8OKVn0GPTyVjJb9x9ivw-1716098557358-0.0.1.1-604800000; path=/; domain=.api.openai.com; HttpOnly; Secure; SameSite=None'), ('server', 'cloudflare'), ('cf-ray', '8861e109d99780e7-NRT'), ('content-encoding', 'gzip'), ('alt-svc', 'h3=":443"; ma=86400')])
+DEBUG:openai._base_client:request_id: req_7d3ef5a5953414ddaa9e3b541bc43e1c
+DEBUG:openai._base_client:Request options: {'method': 'post', 'url': '/images/generations', 'files': None, 'json_data': {'prompt': '\n"泳ぐ猫と空を飛ぶ魚の異世界風変なイラストを描いてください。"', 'model': 'dall-e-3', 'n': 1, 'quality': 'standard', 'size': '1792x1024'}}
+DEBUG:openai._base_client:Sending HTTP Request: POST https://api.openai.com/v1/images/generations
+DEBUG:httpcore.http11:send_request_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_headers.complete
+DEBUG:httpcore.http11:send_request_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:send_request_body.complete
+DEBUG:httpcore.http11:receive_response_headers.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Date', b'Sun, 19 May 2024 06:02:50 GMT'), (b'Content-Type', b'application/json'), (b'Transfer-Encoding', b'chunked'), (b'Connection', b'keep-alive'), (b'openai-version', b'2020-10-01'), (b'openai-organization', b'user-yahcsd0lbfudmaureie17kzy'), (b'x-request-id', b'req_9b0e100df97d2633fb5b7e39ca97b16d'), (b'openai-processing-ms', b'12976'), (b'access-control-allow-origin', b'*'), (b'strict-transport-security', b'max-age=15724800; includeSubDomains'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'CF-RAY', b'8861e10faa4e80e7-NRT'), (b'Content-Encoding', b'gzip'), (b'alt-svc', b'h3=":443"; ma=86400')])
+INFO:httpx:HTTP Request: POST https://api.openai.com/v1/images/generations "HTTP/1.1 200 OK"
+DEBUG:httpcore.http11:receive_response_body.started request=<Request [b'POST']>
+DEBUG:httpcore.http11:receive_response_body.complete
+DEBUG:httpcore.http11:response_closed.started
+DEBUG:httpcore.http11:response_closed.complete
+DEBUG:openai._base_client:HTTP Response: POST https://api.openai.com/v1/images/generations "200 OK" Headers({'date': 'Sun, 19 May 2024 06:02:50 GMT', 'content-type': 'application/json', 'transfer-encoding': 'chunked', 'connection': 'keep-alive', 'openai-version': '2020-10-01', 'openai-organization': 'user-yahcsd0lbfudmaureie17kzy', 'x-request-id': 'req_9b0e100df97d2633fb5b7e39ca97b16d', 'openai-processing-ms': '12976', 'access-control-allow-origin': '*', 'strict-transport-security': 'max-age=15724800; includeSubDomains', 'cf-cache-status': 'DYNAMIC', 'server': 'cloudflare', 'cf-ray': '8861e10faa4e80e7-NRT', 'content-encoding': 'gzip', 'alt-svc': 'h3=":443"; ma=86400'})
+DEBUG:openai._base_client:request_id: req_9b0e100df97d2633fb5b7e39ca97b16d
+INFO:werkzeug:127.0.0.1 - - [19/May/2024 15:02:50] "GET /gameStart HTTP/1.1" 200 -

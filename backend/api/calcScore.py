@@ -1,18 +1,25 @@
 import logging
+import openai
 from typing_extensions import Optional
-from flask import Flask, request, jsonify
+from flask import Blueprint, Flask, request, jsonify
 from openai import OpenAI
 from typing import List
 import numpy as np
 import os
+from os.path import join, dirname
+from dotenv import load_dotenv
 
-from backend.errors.embedException import EmbedException
+dotenv_path = join(dirname(__file__), "../.env")
+load_dotenv(verbose=True, dotenv_path=dotenv_path)
 
-os.environ.get("OPENAI_API_KEY")
-app = Flask(__name__)
+from errors.embedException import EmbedException
+
+openai.api_key = os.environ.get("OPENAI_API_KEY")
 client = OpenAI()
 logging.basicConfig(level=logging.DEBUG, filename="calcScore.log", filemode="w")
 logger = logging.getLogger()
+calc_score_blue_print = Blueprint("calc_score", __name__)
+app = Flask(__name__)
 
 
 def cosine_similarity(vector1: list, vector2: list):

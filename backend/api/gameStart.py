@@ -1,16 +1,24 @@
 import logging
-from flask import Flask, jsonify
+from flask import Blueprint, Flask, jsonify
 import numpy as np
 import openai
 import os
-from backend.errors.generateImgException import GenerateImgException
-from backend.errors.imgPromptException import ImagePromptException
+from errors.generateImgException import GenerateImgException
+from errors.imgPromptException import ImagePromptException
+
+import os
+from os.path import join, dirname
+from dotenv import load_dotenv
+
+dotenv_path = join(dirname(__file__), "../.env")
+load_dotenv(verbose=True, dotenv_path=dotenv_path)
 
 openai.api_key = os.environ.get("OPENAI_API_KEY")
 app = Flask(__name__)
 client = openai.OpenAI()
 logging.basicConfig(level=logging.DEBUG, filename="calcScore.log", filemode="w")
 logger = logging.getLogger()
+game_start_blue_print = Blueprint("calc_score", __name__)
 
 
 # GPT-3.5によって絵のお題のpromptを生成する関数
