@@ -23,8 +23,8 @@ interface StartScreenProps {
 }
 
 const StartScreen: React.FC<StartScreenProps> = ({ startGame }) => {
-  const [numParticipants, setNumParticipants] = useState(0);
-  const [rounds, setRounds] = useState(0);
+  const [numParticipants, setNumParticipants] = useState(1);
+  const [rounds, setRounds] = useState(1);
   const [playersName, setPlayersName] = useState(Array(numParticipants).fill(''));
 
   const handlePlayersName = (name: string,index: number) =>{
