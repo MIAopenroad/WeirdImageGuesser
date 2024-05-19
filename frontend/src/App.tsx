@@ -23,15 +23,17 @@ const App: React.FC = () => {
     });
   };
 
-  const nextRound = () => {
+  const nextRound = (newParticipants: Participant[]) => {
     if (gameState.currentRound < gameState.rounds) {
       setGameState(prevState => ({
         ...prevState,
+        participants: newParticipants,
         currentRound: prevState.currentRound + 1
       }));
     } else {
       setGameState(prevState => ({
         ...prevState,
+        participants: newParticipants,
         currentScreen: ScreenType.Results
       }));
     }

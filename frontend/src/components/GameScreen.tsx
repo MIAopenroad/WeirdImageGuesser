@@ -1,6 +1,7 @@
 // components/GameScreen.tsx
+// import { GameState, Participant, ScreenType } from '../types';
 import React, { useState } from 'react';
-import { GameState } from '../types';
+import { GameState, Participant } from '../types';
 import {
   Button,
   FormControl,
@@ -13,7 +14,7 @@ import {
 
 interface GameScreenProps {
   gameState: GameState;
-  nextRound: () => void;
+  nextRound: (newParticipants: Participant[]) => void;
 }
 
 const GameScreen: React.FC<GameScreenProps> = ({ gameState, nextRound }) => {
@@ -32,7 +33,7 @@ const GameScreen: React.FC<GameScreenProps> = ({ gameState, nextRound }) => {
       ...participant,
       score: participant.score + (answers[index] === 'correct' ? 1 : 0) // Example scoring logic
     }));
-    nextRound();
+    nextRound(newParticipants);
   };
 
   return (
