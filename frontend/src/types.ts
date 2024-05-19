@@ -3,13 +3,13 @@ export interface Participant {
     score: number;
 }
 
-export const ScreenType = {
+export const ScreenKind = {
     Start: 'start',
     Game: 'game',
     Results: 'results',
 } as const;
 
-export type ScreenType = typeof ScreenType[keyof typeof ScreenType];
+export type ScreenType = typeof ScreenKind[keyof typeof ScreenKind];
 
 export interface GameState {
     participants: Participant[];

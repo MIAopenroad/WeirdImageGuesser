@@ -1,6 +1,6 @@
 // App.tsx
 import React, { useState } from 'react';
-import { GameState, Participant, ScreenType } from './types';
+import { GameState, Participant, ScreenKind } from './types';
 import StartScreen from './components/StartScreen';
 import GameScreen from './components/GameScreen';
 import ResultsScreen from './components/ResultsScreen';
@@ -11,7 +11,7 @@ const App: React.FC = () => {
     participants: [],
     rounds: 0,
     currentRound: 0,
-    currentScreen: ScreenType.Start
+    currentScreen: ScreenKind.Start
   });
 
   const startGame = (participants: Participant[], rounds: number) => {
@@ -19,7 +19,7 @@ const App: React.FC = () => {
       participants,
       rounds,
       currentRound: 1,
-      currentScreen: ScreenType.Game
+      currentScreen: ScreenKind.Game
     });
   };
 
@@ -34,7 +34,7 @@ const App: React.FC = () => {
       setGameState(prevState => ({
         ...prevState,
         participants: newParticipants,
-        currentScreen: ScreenType.Results
+        currentScreen: ScreenKind.Results
       }));
     }
   };
@@ -44,16 +44,16 @@ const App: React.FC = () => {
       participants: [],
       rounds: 0,
       currentRound: 0,
-      currentScreen: ScreenType.Start
+      currentScreen: ScreenKind.Start
     });
   };
 
   return (
     <Center minHeight="100vh" minWidth="100vw">
       <Box textAlign="center" py={10} px={6}>
-        {gameState.currentScreen === ScreenType.Start && <StartScreen startGame={startGame} />}
-        {gameState.currentScreen === ScreenType.Game && <GameScreen gameState={gameState} nextRound={nextRound} />}
-        {gameState.currentScreen === ScreenType.Results && <ResultsScreen gameState={gameState} returnToStart={returnToStart} />}
+        {gameState.currentScreen === ScreenKind.Start && <StartScreen startGame={startGame} />}
+        {gameState.currentScreen === ScreenKind.Game && <GameScreen gameState={gameState} nextRound={nextRound} />}
+        {gameState.currentScreen === ScreenKind.Results && <ResultsScreen gameState={gameState} returnToStart={returnToStart} />}
       </Box>
     </Center>
   );
