@@ -3,7 +3,6 @@ from typing_extensions import Optional
 from flask import Flask, request, jsonify
 from openai import OpenAI
 from typing import List
-import openai
 import numpy as np
 import os
 
@@ -34,7 +33,7 @@ def embedding_answer(answer: str) -> Optional[List[float]]:
         )
         emb_vector = response.data[0].embedding
         return emb_vector
-    except openai.OpenAIError:
+    except Exception:
         logger.warning(EmbedException(answer))
         raise EmbedException(answer)
 
@@ -59,17 +58,17 @@ def calc_score():
 
     except EmbedException as e:
         return jsonify(e)
+    except Exception as e:
+        return jsonify(e)
 
-
-@app.route("/calcTest", methods=["GET"])
-def calc_test():
-    score = [0.5, 0.2, 0.4, 0.9]
-    response = jsonify(score)
-    return response
-
-
-# cos_sim test
-if __name__ == "__main__":
+    # @app.route("/calcTest", methods=["GET"])
+    # def calc_test():
+    #     score = [0.5, 0.2, 0.4, 0.9]
+    #     response = jsonify(score)
+    #     return response
+    #
+    # cos_sim test
+    # if __name__ == "__main__":
     pass
     # a = [0.1, 0.5, 1]
     # b = [0.5, 0.8, 0.1]

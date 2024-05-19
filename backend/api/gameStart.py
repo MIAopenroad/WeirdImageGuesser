@@ -37,7 +37,8 @@ def generate_prompt():
         )
         img_prompt = response.choices[0].message.content
         return img_prompt
-    except openai.OpenAIError:
+
+    except Exception:
         logger.warning(ImagePromptException())
         raise ImagePromptException()
 
@@ -53,7 +54,8 @@ def generate_img_from_prompt(img_prompt: str):
             n=1,
         )
         return response.data[0].url
-    except openai.OpenAIError:
+
+    except Exception:
         logger.warning(GenerateImgException(img_prompt))
         raise GenerateImgException(img_prompt)
 
@@ -69,3 +71,5 @@ def game_start():
         return jsonify(ie)
     except GenerateImgException as ge:
         return jsonify(ge)
+    except Exception as e:
+        return jsonify(e)
