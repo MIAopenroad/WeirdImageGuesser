@@ -5,8 +5,8 @@ import { QuestionResponse, ScoreResponse } from "../types";
 export const getQuestion = async (): Promise<QuestionResponse> => {
   const { data } = await axios.get(QUESTION_URI);
   return {
-    imageURL: data.imageURL,
-    answer: data.answer,
+    imageURL: data.url,
+    answer: data.prompt,
   };
 };
 
