@@ -1,8 +1,9 @@
 // App.tsx
 import React, { useState } from 'react';
-import { GameState, Participant, ScreenType } from './types';
+import { GameState, Participant, ScreenType, RoundData } from './types';
 import StartScreen from './components/StartScreen';
 import GameScreen from './components/GameScreen';
+import RoundSummaryScreen from './components/RoundSummaryScreen';
 import ResultsScreen from './components/ResultsScreen';
 import { Box, Center } from '@chakra-ui/react';
 
@@ -11,6 +12,7 @@ const App: React.FC = () => {
     participants: [],
     rounds: 0,
     currentRound: 0,
+    roundData: [],
     currentScreen: ScreenType.Start
   });
 
@@ -19,6 +21,7 @@ const App: React.FC = () => {
       participants,
       rounds,
       currentRound: 1,
+      roundData: [],
       currentScreen: ScreenType.Game
     });
   };
@@ -39,6 +42,14 @@ const App: React.FC = () => {
     }
   };
 
+  const moveToNextGameRound = () => {
+    setGameState(prevState => ({
+      ...prevState,
+      currentScreen: ScreenType.Game
+    }));
+  };
+
+
   const returnToStart = () => {
     setGameState({
       participants: [],
@@ -53,6 +64,7 @@ const App: React.FC = () => {
       <Box textAlign="center" py={10} px={6}>
         {gameState.currentScreen === ScreenType.Start && <StartScreen startGame={startGame} />}
         {gameState.currentScreen === ScreenType.Game && <GameScreen gameState={gameState} nextRound={nextRound} />}
+        {gameState.currentScreen === ScreenType.RoundSummary && <RoundSummaryScreen gameState={gameState} moveToNextGameRound={moveToNextGameRound} />}
         {gameState.currentScreen === ScreenType.Results && <ResultsScreen gameState={gameState} returnToStart={returnToStart} />}
       </Box>
     </Center>
