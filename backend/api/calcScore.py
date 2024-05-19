@@ -40,7 +40,7 @@ def embedding_answer(answer: str) -> Optional[List[float]]:
 
 
 # answerのリストを受け取り、ベクトルに埋め込んで正解との類似度を測りスコアに直して返す関数
-@app.route("/calcScore", methods=["GET"])
+@app.route("/calcScore", methods=["POST"])
 def calc_score():
     answers = request.args["answers"]
     correct_answer = request.args["correct"]
